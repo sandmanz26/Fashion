@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { Reveal, StaggerItem, StaggerReveal } from "@/components/motion/reveal";
 import { testimonials } from "@/lib/data";
 
 export function SocialProof() {
   return (
     <section className="bg-paper py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
               Made By Our Community
@@ -19,32 +20,34 @@ export function SocialProof() {
             Tag @wearpurl and #madewithpurl — our favorites get featured
             here, in the Journal, and on our socials every week.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+        <StaggerReveal className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {testimonials.map((t) => (
-            <figure key={t.name} className="flex flex-col">
-              <div className="relative aspect-[4/5] overflow-hidden bg-oat">
-                <Image
-                  src={t.image}
-                  alt={t.imageAlt}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <blockquote className="mt-5 font-serif text-lg leading-snug text-ink">
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
-              <figcaption className="mt-4 flex items-center justify-between text-xs uppercase tracking-[0.06em] text-stone">
-                <span>
-                  {t.name} · {t.handle}
-                </span>
-                <span className="text-clay">{t.project}</span>
-              </figcaption>
-            </figure>
+            <StaggerItem key={t.name}>
+              <figure className="flex flex-col">
+                <div className="relative aspect-[4/5] overflow-hidden bg-oat">
+                  <Image
+                    src={t.image}
+                    alt={t.imageAlt}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <blockquote className="mt-5 font-serif text-lg leading-snug text-ink">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-4 flex items-center justify-between text-xs uppercase tracking-[0.06em] text-stone">
+                  <span>
+                    {t.name} · {t.handle}
+                  </span>
+                  <span className="text-clay">{t.project}</span>
+                </figcaption>
+              </figure>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerReveal>
       </div>
     </section>
   );

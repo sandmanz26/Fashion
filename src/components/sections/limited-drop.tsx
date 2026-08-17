@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Countdown } from "@/components/sections/countdown";
 import { ButtonLink } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 
 export function LimitedDrop() {
   return (
@@ -12,7 +13,7 @@ export function LimitedDrop() {
         className="object-cover opacity-30"
         sizes="100vw"
       />
-      <div className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10">
+      <Reveal className="relative z-10 mx-auto max-w-[1400px] px-5 md:px-10">
         <p className="text-[11px] uppercase tracking-[0.25em] text-clay-light">
           Drop 01 — Autumn / Winter
         </p>
@@ -37,7 +38,7 @@ export function LimitedDrop() {
             Preview the Drop
           </ButtonLink>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

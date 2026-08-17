@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 import { products } from "@/lib/data";
 
 const kit = products.find((p) => p.slug === "weekend-sweater-kit")!;
@@ -9,7 +10,7 @@ export function KitSpotlight() {
   return (
     <section className="bg-ink py-24 text-paper md:py-32">
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-14 px-5 md:grid-cols-12 md:gap-10 md:px-10">
-        <div className="md:col-span-5">
+        <Reveal className="md:col-span-5">
           <p className="text-[11px] uppercase tracking-[0.25em] text-clay-light">
             Knitting Kits
           </p>
@@ -42,9 +43,12 @@ export function KitSpotlight() {
               Shop the Kit
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="relative aspect-[4/5] overflow-hidden md:col-span-6 md:col-start-7">
+        <Reveal
+          delay={0.1}
+          className="relative aspect-[4/5] overflow-hidden md:col-span-6 md:col-start-7"
+        >
           <Image
             src={kit.image}
             alt={kit.imageAlt}
@@ -52,7 +56,7 @@ export function KitSpotlight() {
             sizes="(min-width: 768px) 50vw, 100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

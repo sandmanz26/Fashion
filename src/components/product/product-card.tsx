@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import type { Product } from "@/lib/data";
 import { useCart } from "@/lib/cart-context";
 
@@ -9,7 +11,11 @@ export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
 
   return (
-    <div className="group flex flex-col">
+    <motion.div
+      className="group flex flex-col"
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+    >
       <Link
         href={`/shop/${product.slug}`}
         className="relative block aspect-[4/5] overflow-hidden bg-oat"
@@ -19,8 +25,9 @@ export function ProductCard({ product }: { product: Product }) {
           alt={product.imageAlt}
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
         />
+        <div className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/10" />
         {product.limited && (
           <span className="absolute left-3 top-3 bg-clay px-2.5 py-1 text-[10px] uppercase tracking-[0.1em] text-paper">
             Limited
@@ -36,7 +43,9 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="mt-4 flex flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <Link href={`/shop/${product.slug}`}>
-            <h3 className="font-serif text-lg leading-snug">{product.name}</h3>
+            <h3 className="font-serif text-lg leading-snug transition-colors group-hover:text-clay">
+              {product.name}
+            </h3>
           </Link>
           <span className="whitespace-nowrap text-sm text-ink-soft">
             ${product.price}
@@ -50,11 +59,15 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={() => addItem(product)}
-          className="mt-4 border-t border-line pt-3 text-left text-[12px] uppercase tracking-[0.1em] text-ink-soft transition-colors hover:text-clay"
+          className="group/btn mt-4 flex items-center justify-between border-t border-line pt-3 text-left text-[12px] uppercase tracking-[0.1em] text-ink-soft transition-colors hover:text-clay"
         >
-          {product.category === "Pattern" ? "Get the Pattern" : "Add to Bag"} →
+          {product.category === "Pattern" ? "Get the Pattern" : "Add to Bag"}
+          <ArrowRight
+            size={14}
+            className="transition-transform duration-300 ease-out group-hover/btn:translate-x-1"
+          />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

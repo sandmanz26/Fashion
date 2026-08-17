@@ -1,10 +1,11 @@
 import { Quiz } from "@/components/quiz/quiz";
+import { Reveal } from "@/components/motion/reveal";
 
 export function QuizSection() {
   return (
     <section className="bg-oat py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        <div className="mb-14 text-center">
+        <Reveal className="mb-14 text-center">
           <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
             Personalized For You
           </p>
@@ -15,8 +16,10 @@ export function QuizSection() {
             Four questions. One recommendation matched to your skill,
             timeline, style, and budget.
           </p>
-        </div>
-        <Quiz />
+        </Reveal>
+        <Reveal delay={0.15}>
+          <Quiz />
+        </Reveal>
       </div>
     </section>
   );

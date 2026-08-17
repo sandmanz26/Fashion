@@ -51,7 +51,7 @@ export const products: Product[] = [
     hours: "~24 hrs",
     materials: ["6 skeins Aran-weight wool", "4.5mm needles", "Cable needle"],
     sizes: "XS–3XL, fully graded",
-    blurb: "A fisherman cable, modernized — cropped, boxy, unapologetic.",
+    blurb: "Traditional guernsey cables, minus the traditional fit.",
     description:
       "We took the traditional guernsey cable and gave it new proportions: boxy body, cropped hem, a neckline that sits exactly where it should. This one takes patience. It rewards it — a piece you'll wear in rotation for a decade.",
     image: "/images/product-harbor-sweater.jpg",
@@ -180,7 +180,7 @@ export const testimonials: Testimonial[] = [
     name: "Dev Achariya",
     handle: "@devknits",
     quote:
-      "The First Stitch Kit is the only reason I know how to knit. No fluff, no cutesy graphics — just clean instructions and a genuinely nice vest at the end.",
+      "I'd bought and returned two other 'beginner' kits before this one — always got stuck at the armhole and gave up. The video for the Field Vest actually shows you the ugly part in real time. I finished it on a Tuesday and wore it that Friday.",
     project: "The Field Vest",
     image: "/images/community-2.jpg",
     imageAlt: "Man wearing a textured knit vest sitting at a café table",

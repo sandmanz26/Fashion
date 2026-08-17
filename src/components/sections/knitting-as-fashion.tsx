@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal, StaggerItem, StaggerReveal } from "@/components/motion/reveal";
 import { journalPosts } from "@/lib/data";
 
 export function KnittingAsFashion() {
@@ -9,7 +10,7 @@ export function KnittingAsFashion() {
   return (
     <section className="bg-paper-warm py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-        <div className="flex items-end justify-between gap-6">
+        <Reveal className="flex items-end justify-between gap-6">
           <div>
             <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
               The Journal
@@ -24,58 +25,61 @@ export function KnittingAsFashion() {
           >
             Read the Journal →
           </Link>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
-          <Link href={`/journal/${featured.slug}`} className="group block">
-            <div className="relative aspect-[16/11] overflow-hidden">
-              <Image
-                src={featured.image}
-                alt={featured.imageAlt}
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-            </div>
-            <p className="mt-5 text-[11px] uppercase tracking-[0.08em] text-clay">
-              {featured.category} · {featured.readTime}
-            </p>
-            <h3 className="mt-2 font-serif text-2xl leading-tight sm:text-3xl">
-              {featured.title}
-            </h3>
-            <p className="mt-2 text-sm text-stone">{featured.dek}</p>
-          </Link>
+          <Reveal delay={0.1}>
+            <Link href={`/journal/${featured.slug}`} className="group block">
+              <div className="relative aspect-[16/11] overflow-hidden">
+                <Image
+                  src={featured.image}
+                  alt={featured.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+              <p className="mt-5 text-[11px] uppercase tracking-[0.08em] text-clay">
+                {featured.category} · {featured.readTime}
+              </p>
+              <h3 className="mt-2 font-serif text-2xl leading-tight sm:text-3xl">
+                {featured.title}
+              </h3>
+              <p className="mt-2 text-sm text-stone">{featured.dek}</p>
+            </Link>
+          </Reveal>
 
-          <div className="flex flex-col gap-8 divide-y divide-line">
+          <StaggerReveal className="flex flex-col gap-8 divide-y divide-line">
             {rest.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/journal/${post.slug}`}
-                className="group flex gap-5 pt-8 first:pt-0"
-              >
-                <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:w-32">
-                  <Image
-                    src={post.image}
-                    alt={post.imageAlt}
-                    fill
-                    sizes="128px"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                  />
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.08em] text-clay">
-                    {post.category} · {post.readTime}
-                  </p>
-                  <h3 className="mt-1 font-serif text-lg leading-snug sm:text-xl">
-                    {post.title}
-                  </h3>
-                  <p className="mt-1 hidden text-sm text-stone sm:block">
-                    {post.dek}
-                  </p>
-                </div>
-              </Link>
+              <StaggerItem key={post.slug}>
+                <Link
+                  href={`/journal/${post.slug}`}
+                  className="group flex gap-5 pt-8 first:pt-0"
+                >
+                  <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:w-32">
+                    <Image
+                      src={post.image}
+                      alt={post.imageAlt}
+                      fill
+                      sizes="128px"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-clay">
+                      {post.category} · {post.readTime}
+                    </p>
+                    <h3 className="mt-1 font-serif text-lg leading-snug sm:text-xl">
+                      {post.title}
+                    </h3>
+                    <p className="mt-1 hidden text-sm text-stone sm:block">
+                      {post.dek}
+                    </p>
+                  </div>
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerReveal>
         </div>
       </div>
     </section>

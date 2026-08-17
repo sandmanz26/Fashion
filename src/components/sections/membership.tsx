@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 
 const perks = [
   "One exclusive pattern every month, never sold separately",
@@ -14,7 +15,7 @@ export function Membership() {
   return (
     <section className="bg-paper py-24 md:py-32">
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-14 px-5 md:grid-cols-12 md:gap-10 md:px-10">
-        <div className="relative aspect-[4/5] overflow-hidden md:col-span-5">
+        <Reveal className="relative aspect-[4/5] overflow-hidden md:col-span-5">
           <Image
             src="/images/community-3.jpg"
             alt="Woman wearing a chunky terracotta scarf on the street"
@@ -22,9 +23,9 @@ export function Membership() {
             sizes="(min-width: 768px) 40vw, 100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
 
-        <div className="md:col-span-6 md:col-start-7">
+        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7">
           <p className="text-[11px] uppercase tracking-[0.25em] text-clay">
             Membership
           </p>
@@ -54,7 +55,7 @@ export function Membership() {
               Join the Knit Club
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

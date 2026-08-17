@@ -34,14 +34,19 @@ export default function AboutPage() {
         <div className="flex flex-col gap-6 text-[17px] leading-[1.75] text-ink-soft">
           <p>
             PURL started in a design studio, not a craft room. Our founder
-            spent nine years designing for fast fashion houses, watching
-            samples get approved, mass produced, and landfilled within a
-            single season. She started knitting on the side as an antidote
-            — something slow, something hers, something that couldn&apos;t
-            be replicated by a factory in eleven days.
+            spent nine years as a technical designer for a fast-fashion
+            label most people would recognize, engineering garments to look
+            expensive in a product photo and hold together for about one
+            wash cycle past the return window. She kept exactly one sample
+            from those nine years — a cardigan cut from a lookbook the
+            night before the shoot. Nothing else from that job survived
+            this long, including, eventually, her patience for it.
           </p>
           <p>
-            The pieces she made started getting stopped on the street. Not
+            She quit on a Thursday and cast on that weekend, no plan beyond
+            making one sweater that would outlast the job that made her
+            hate sweaters. The pieces she made started getting stopped on
+            the street. Not
             &ldquo;cute hobby&rdquo; stopped — &ldquo;who makes this&rdquo;
             stopped. That was the moment PURL stopped being a personal
             project and started being a question worth answering: what if
