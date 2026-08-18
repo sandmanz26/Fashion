@@ -92,18 +92,38 @@ export default async function ProductPage({
           </p>
 
           <div className="mt-10 grid grid-cols-2 gap-y-6 border-t border-line pt-8">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
-                Difficulty
-              </p>
-              <p className="mt-1 font-serif text-lg">{product.difficulty}</p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
-                Time
-              </p>
-              <p className="mt-1 font-serif text-lg">{product.hours}</p>
-            </div>
+            {product.difficulty && (
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
+                  Difficulty
+                </p>
+                <p className="mt-1 font-serif text-lg">{product.difficulty}</p>
+              </div>
+            )}
+            {product.hours && (
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
+                  Time
+                </p>
+                <p className="mt-1 font-serif text-lg">{product.hours}</p>
+              </div>
+            )}
+            {product.weight && (
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
+                  Weight
+                </p>
+                <p className="mt-1 font-serif text-lg">{product.weight}</p>
+              </div>
+            )}
+            {product.yardage && (
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.08em] text-stone">
+                  Yardage
+                </p>
+                <p className="mt-1 font-serif text-lg">{product.yardage}</p>
+              </div>
+            )}
             {product.sizes && (
               <div>
                 <p className="text-[11px] uppercase tracking-[0.08em] text-stone">

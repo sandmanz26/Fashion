@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { SearchOverlay } from "@/components/search/search-overlay";
 import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { count, open } = useCart();
 
   useEffect(() => {
@@ -28,6 +30,17 @@ export function SiteNav() {
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (
@@ -70,8 +83,15 @@ export function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block p-2" aria-label="Search">
+            <button
+              className="flex items-center gap-2 p-2"
+              aria-label="Search"
+              onClick={() => setSearchOpen(true)}
+            >
               <Search size={18} />
+              <kbd className="hidden rounded border border-line px-1.5 py-0.5 text-[10px] text-stone lg:inline-block">
+                ⌘K
+              </kbd>
             </button>
             <button
               className="relative p-2"
@@ -154,6 +174,8 @@ export function SiteNav() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +11,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function CartDrawer() {
   const { lines, isOpen, close, removeItem, subtotal } = useCart();
+  const [checkoutRequested, setCheckoutRequested] = useState(false);
+
+  const handleClose = () => {
+    close();
+    setTimeout(() => setCheckoutRequested(false), 400);
+  };
 
   return (
     <AnimatePresence>
@@ -22,7 +29,7 @@ export function CartDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[60] bg-ink/40"
-            onClick={close}
+            onClick={handleClose}
           />
           <motion.aside
             key="drawer"
@@ -33,14 +40,38 @@ export function CartDrawer() {
             className="fixed right-0 top-0 z-[70] flex h-full w-full max-w-md flex-col bg-paper"
           >
             <div className="flex items-center justify-between border-b border-line px-6 py-5">
-              <h2 className="font-serif text-xl">Your Bag ({lines.length})</h2>
-              <button onClick={close} aria-label="Close cart">
+              <h2 className="font-serif text-xl">
+                {checkoutRequested ? "Checkout" : `Your Bag (${lines.length})`}
+              </h2>
+              <button onClick={handleClose} aria-label="Close cart">
                 <X size={20} />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-6">
-              {lines.length === 0 ? (
+              {checkoutRequested ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: EASE }}
+                  className="flex h-full flex-col items-center justify-center gap-4 text-center"
+                >
+                  <CheckCircle2 size={32} className="text-clay" />
+                  <p className="font-serif text-2xl">This is a design prototype.</p>
+                  <p className="max-w-xs text-sm text-stone">
+                    There&apos;s no payment processor wired up yet — this build is
+                    front-end only. Your {lines.length}{" "}
+                    {lines.length === 1 ? "item" : "items"} (${subtotal.toFixed(2)})
+                    would go to checkout here once PURL has a backend.
+                  </p>
+                  <button
+                    onClick={() => setCheckoutRequested(false)}
+                    className="mt-2 text-xs uppercase tracking-wide text-clay hover:underline"
+                  >
+                    ← Back to bag
+                  </button>
+                </motion.div>
+              ) : lines.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
                   <p className="font-serif text-2xl text-ink-soft">Your bag is empty.</p>
                   <p className="text-sm text-stone">
@@ -97,13 +128,17 @@ export function CartDrawer() {
               )}
             </div>
 
-            {lines.length > 0 && (
+            {lines.length > 0 && !checkoutRequested && (
               <div className="border-t border-line px-6 py-6">
                 <div className="mb-4 flex items-center justify-between text-sm">
                   <span className="text-stone">Subtotal</span>
                   <span className="font-medium">${subtotal.toFixed(2)}</span>
                 </div>
-                <Button variant="primary" className="w-full">
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  onClick={() => setCheckoutRequested(true)}
+                >
                   Checkout
                 </Button>
                 <p className="mt-3 text-center text-xs text-stone">

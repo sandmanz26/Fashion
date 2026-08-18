@@ -53,9 +53,22 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <p className="mt-1 text-sm text-stone">{product.blurb}</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] uppercase tracking-[0.06em] text-stone">
-          <span>{product.difficulty}</span>
-          <span className="text-line">·</span>
-          <span>{product.hours}</span>
+          {product.difficulty && product.hours ? (
+            <>
+              <span>{product.difficulty}</span>
+              <span className="text-line">·</span>
+              <span>{product.hours}</span>
+            </>
+          ) : (
+            product.weight &&
+            product.yardage && (
+              <>
+                <span>{product.weight} Weight</span>
+                <span className="text-line">·</span>
+                <span>{product.yardage}</span>
+              </>
+            )
+          )}
         </div>
         <button
           onClick={() => addItem(product)}

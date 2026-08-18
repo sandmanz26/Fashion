@@ -8,8 +8,14 @@ export interface Product {
   category: ProductCategory;
   price: number;
   compareAt?: number;
-  difficulty: Difficulty;
-  hours: string;
+  /** Only meaningful for Pattern/Kit/Finished Piece — raw materials like Yarn have no skill level. */
+  difficulty?: Difficulty;
+  /** Estimated time to knit — Pattern/Kit/Finished Piece only. */
+  hours?: string;
+  /** Yarn only: weight category, e.g. "DK", "Aran", "Bulky". */
+  weight?: string;
+  /** Yarn only: yardage per unit, e.g. "200m / 100g". */
+  yardage?: string;
   materials: string[];
   sizes?: string;
   blurb: string;
@@ -145,8 +151,8 @@ export const products: Product[] = [
     name: "Merino Skein — Core Palette",
     category: "Yarn",
     price: 15,
-    difficulty: "Beginner",
-    hours: "Per skein",
+    weight: "DK",
+    yardage: "200m / 100g",
     materials: ["100% mulesing-free merino", "100g / 200m", "Small-batch dyed"],
     blurb: "Our house yarn — the base weight for every PURL pattern.",
     description:

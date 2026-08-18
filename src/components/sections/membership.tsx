@@ -13,7 +13,7 @@ const perks = [
 
 export function Membership() {
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-20 md:py-28">
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-14 px-5 md:grid-cols-12 md:gap-10 md:px-10">
         <Reveal className="relative aspect-[4/5] overflow-hidden md:col-span-5">
           <Image

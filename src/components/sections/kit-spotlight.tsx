@@ -8,7 +8,7 @@ const kit = products.find((p) => p.slug === "weekend-sweater-kit")!;
 
 export function KitSpotlight() {
   return (
-    <section className="bg-ink py-24 text-paper md:py-32">
+    <section className="bg-ink py-28 text-paper md:py-40">
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-14 px-5 md:grid-cols-12 md:gap-10 md:px-10">
         <Reveal className="md:col-span-5">
           <p className="text-[11px] uppercase tracking-[0.25em] text-clay-light">

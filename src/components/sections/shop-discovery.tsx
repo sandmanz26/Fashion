@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { products, type ProductCategory } from "@/lib/data";
 import { ProductCard } from "@/components/product/product-card";
+import { FlagshipProductCard } from "@/components/product/flagship-product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Reveal, StaggerItem, StaggerReveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
@@ -20,8 +21,11 @@ export function ShopDiscovery() {
   const filtered =
     active === "All" ? products : products.filter((p) => p.category === active);
 
+  const flagship = filtered.find((p) => p.slug === "the-cloud-cardigan");
+  const rest = flagship ? filtered.filter((p) => p.id !== flagship.id) : filtered;
+
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-20 md:py-28">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
@@ -52,13 +56,31 @@ export function ShopDiscovery() {
 
         <StaggerReveal
           key={active}
-          className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4"
+          className={cn(
+            "mt-12 grid grid-cols-1 gap-x-6 gap-y-14",
+            flagship ? "lg:grid-cols-12" : "sm:grid-cols-2 lg:grid-cols-4"
+          )}
         >
-          {filtered.slice(0, 8).map((product) => (
-            <StaggerItem key={product.id}>
-              <ProductCard product={product} />
+          {flagship && (
+            <StaggerItem className="lg:col-span-5">
+              <FlagshipProductCard product={flagship} />
             </StaggerItem>
-          ))}
+          )}
+          {flagship ? (
+            <div className="grid grid-cols-2 gap-x-6 gap-y-14 lg:col-span-7 lg:grid-cols-2">
+              {rest.map((product) => (
+                <StaggerItem key={product.id}>
+                  <ProductCard product={product} />
+                </StaggerItem>
+              ))}
+            </div>
+          ) : (
+            rest.map((product) => (
+              <StaggerItem key={product.id}>
+                <ProductCard product={product} />
+              </StaggerItem>
+            ))
+          )}
         </StaggerReveal>
 
         <div className="mt-16 flex justify-center">

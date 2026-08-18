@@ -5,8 +5,7 @@ import { PatternSpotlight } from "@/components/sections/pattern-spotlight";
 import { KitSpotlight } from "@/components/sections/kit-spotlight";
 import { SocialProof } from "@/components/sections/social-proof";
 import { KnittingAsFashion } from "@/components/sections/knitting-as-fashion";
-import { BeginnerFunnel } from "@/components/sections/beginner-funnel";
-import { QuizSection } from "@/components/sections/quiz-section";
+import { StartHere } from "@/components/sections/start-here";
 import { LimitedDrop } from "@/components/sections/limited-drop";
 import { Membership } from "@/components/sections/membership";
 import { Newsletter } from "@/components/sections/newsletter";
@@ -21,8 +20,7 @@ export default function Home() {
       <KitSpotlight />
       <SocialProof />
       <KnittingAsFashion />
-      <BeginnerFunnel />
-      <QuizSection />
+      <StartHere />
       <LimitedDrop />
       <Membership />
       <Newsletter />

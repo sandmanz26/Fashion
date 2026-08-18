@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 function getRemaining(target: Date) {
   const total = Math.max(0, target.getTime() - Date.now());
   return {
+    total,
     days: Math.floor(total / (1000 * 60 * 60 * 24)),
     hours: Math.floor((total / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((total / (1000 * 60)) % 60),
@@ -13,18 +14,29 @@ function getRemaining(target: Date) {
   };
 }
 
-export function Countdown({ target }: { target: string }) {
+export function Countdown({
+  target,
+  onExpire,
+}: {
+  target: string;
+  onExpire?: (expired: boolean) => void;
+}) {
   const [time, setTime] = useState<ReturnType<typeof getRemaining> | null>(null);
 
   useEffect(() => {
     const targetDate = new Date(target);
-    const tick = () => setTime(getRemaining(targetDate));
+    const tick = () => {
+      const next = getRemaining(targetDate);
+      setTime(next);
+      onExpire?.(next.total <= 0);
+    };
     const immediate = setTimeout(tick, 0);
     const id = setInterval(tick, 1000);
     return () => {
       clearTimeout(immediate);
       clearInterval(id);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
   const units = [

@@ -4,7 +4,7 @@ import { testimonials } from "@/lib/data";
 
 export function SocialProof() {
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-20 md:py-28">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>

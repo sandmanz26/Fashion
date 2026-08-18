@@ -1,14 +1,21 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Reveal, StaggerItem, StaggerReveal } from "@/components/motion/reveal";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/motion/reveal";
 import { journalPosts } from "@/lib/data";
 
 export function KnittingAsFashion() {
-  const featured = journalPosts[0];
-  const rest = journalPosts.slice(1);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (dir: 1 | -1) => {
+    scrollerRef.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
+  };
 
   return (
-    <section className="bg-paper-warm py-24 md:py-32">
+    <section className="bg-paper-warm py-20 md:py-28">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <Reveal className="flex items-end justify-between gap-6">
           <div>
@@ -19,68 +26,76 @@ export function KnittingAsFashion() {
               Knitting is fashion. We&apos;ll prove it.
             </h2>
           </div>
-          <Link
-            href="/journal"
-            className="hidden shrink-0 text-[12px] uppercase tracking-[0.1em] text-ink-soft hover:text-clay md:block"
-          >
-            Read the Journal →
-          </Link>
+          <div className="hidden shrink-0 items-center gap-4 md:flex">
+            <Link
+              href="/journal"
+              className="text-[12px] uppercase tracking-[0.1em] text-ink-soft hover:text-clay"
+            >
+              Read the Journal →
+            </Link>
+            <div className="flex gap-2">
+              <button
+                onClick={() => scroll(-1)}
+                aria-label="Scroll left"
+                className="rounded-full border border-line p-2 transition-colors hover:border-ink"
+              >
+                <ArrowLeft size={16} />
+              </button>
+              <button
+                onClick={() => scroll(1)}
+                aria-label="Scroll right"
+                className="rounded-full border border-line p-2 transition-colors hover:border-ink"
+              >
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
         </Reveal>
+      </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
-          <Reveal delay={0.1}>
-            <Link href={`/journal/${featured.slug}`} className="group block">
-              <div className="relative aspect-[16/11] overflow-hidden">
+      <Reveal delay={0.1}>
+        <div
+          ref={scrollerRef}
+          className="mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 [scrollbar-width:none] md:px-10 [&::-webkit-scrollbar]:hidden"
+        >
+          {journalPosts.map((post, i) => (
+            <Link
+              key={post.slug}
+              href={`/journal/${post.slug}`}
+              className="group block w-[80vw] shrink-0 snap-start sm:w-[380px]"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
-                  src={featured.image}
-                  alt={featured.imageAlt}
+                  src={post.image}
+                  alt={post.imageAlt}
                   fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  sizes="(min-width: 640px) 380px, 80vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
+                <span className="absolute left-4 top-4 font-serif text-5xl text-paper/80">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
               <p className="mt-5 text-[11px] uppercase tracking-[0.08em] text-clay">
-                {featured.category} · {featured.readTime}
+                {post.category} · {post.readTime}
               </p>
-              <h3 className="mt-2 font-serif text-2xl leading-tight sm:text-3xl">
-                {featured.title}
+              <h3 className="mt-2 font-serif text-2xl leading-tight">
+                {post.title}
               </h3>
-              <p className="mt-2 text-sm text-stone">{featured.dek}</p>
+              <p className="mt-2 max-w-sm text-sm text-stone">{post.dek}</p>
             </Link>
-          </Reveal>
-
-          <StaggerReveal className="flex flex-col gap-8 divide-y divide-line">
-            {rest.map((post) => (
-              <StaggerItem key={post.slug}>
-                <Link
-                  href={`/journal/${post.slug}`}
-                  className="group flex gap-5 pt-8 first:pt-0"
-                >
-                  <div className="relative aspect-square w-24 shrink-0 overflow-hidden sm:w-32">
-                    <Image
-                      src={post.image}
-                      alt={post.imageAlt}
-                      fill
-                      sizes="128px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.08em] text-clay">
-                      {post.category} · {post.readTime}
-                    </p>
-                    <h3 className="mt-1 font-serif text-lg leading-snug sm:text-xl">
-                      {post.title}
-                    </h3>
-                    <p className="mt-1 hidden text-sm text-stone sm:block">
-                      {post.dek}
-                    </p>
-                  </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerReveal>
+          ))}
+          <div aria-hidden className="w-px shrink-0 sm:w-4" />
         </div>
+      </Reveal>
+
+      <div className="mt-8 flex justify-center md:hidden">
+        <Link
+          href="/journal"
+          className="text-[12px] uppercase tracking-[0.1em] text-ink-soft hover:text-clay"
+        >
+          Read the Journal →
+        </Link>
       </div>
     </section>
   );

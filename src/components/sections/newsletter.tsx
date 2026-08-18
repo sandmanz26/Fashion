@@ -12,7 +12,7 @@ export function Newsletter() {
   const [email, setEmail] = useState("");
 
   return (
-    <section className="bg-clay py-24 text-paper md:py-32">
+    <section className="bg-clay py-16 text-paper md:py-24">
       <Reveal className="mx-auto max-w-2xl px-5 text-center md:px-10">
         <p className="text-[11px] uppercase tracking-[0.25em] text-paper/70">
           Free Pattern
