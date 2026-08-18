@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero";
 import { EditorialIntro } from "@/components/sections/editorial-intro";
+import { Muse } from "@/components/muse/muse";
 import { ShopDiscovery } from "@/components/sections/shop-discovery";
 import { PatternSpotlight } from "@/components/sections/pattern-spotlight";
 import { KitSpotlight } from "@/components/sections/kit-spotlight";
@@ -15,6 +16,7 @@ export default function Home() {
     <>
       <Hero />
       <EditorialIntro />
+      <Muse />
       <ShopDiscovery />
       <PatternSpotlight />
       <KitSpotlight />

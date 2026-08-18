@@ -5,6 +5,7 @@ import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { StickyMobileCta } from "@/components/layout/sticky-cta";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main className="flex-1">{children}</main>
           <SiteFooter />
           <CartDrawer />
+          <StickyMobileCta />
         </CartProvider>
       </body>
     </html>
