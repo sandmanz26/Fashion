@@ -4,8 +4,20 @@ import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { ButtonLink } from "@/components/ui/button";
+import { ImageHotspots, type Hotspot } from "@/components/hotspot/image-hotspots";
+import { products } from "@/lib/data";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+const heroHotspots: Hotspot[] = [
+  {
+    id: "cardigan",
+    type: "product",
+    x: 60,
+    y: 58,
+    product: products.find((p) => p.slug === "the-cloud-cardigan")!,
+  },
+];
 
 const container: Variants = {
   hidden: {},
@@ -85,6 +97,15 @@ export function Hero() {
             Start Knitting
           </ButtonLink>
         </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 1.4 }}
+        className="absolute inset-0 z-10 hidden sm:block"
+      >
+        <ImageHotspots hotspots={heroHotspots} />
       </motion.div>
 
       <motion.div

@@ -25,6 +25,8 @@ export interface Product {
   tags?: string[];
   limited?: boolean;
   bestseller?: boolean;
+  /** Optional construction-detail callouts positioned on the product photo, x/y as 0-100. */
+  craftDetails?: { x: number; y: number; title: string; description: string }[];
 }
 
 export const products: Product[] = [
@@ -46,6 +48,26 @@ export const products: Product[] = [
       "Editorial photograph of a woman wearing an oversized ivory hand-knitted cardigan with a dramatic collar",
     tags: ["oversized", "cardigan", "neutral"],
     bestseller: true,
+    craftDetails: [
+      {
+        x: 42,
+        y: 22,
+        title: "Exaggerated shawl collar",
+        description: "Folds flat, stands up, or wraps loose — it's cut big enough to do all three.",
+      },
+      {
+        x: 78,
+        y: 45,
+        title: "Dropped shoulder",
+        description: "The seam sits past your shoulder point, which is what makes the drape look intentional instead of just baggy.",
+      },
+      {
+        x: 55,
+        y: 78,
+        title: "Horn buttons",
+        description: "Six of them, sourced separately from the yarn — they're the one thing in the kit not spun from wool.",
+      },
+    ],
   },
   {
     id: "p2",
@@ -64,6 +86,20 @@ export const products: Product[] = [
     imageAlt:
       "Editorial photograph of a man wearing a charcoal chunky cable-knit sweater",
     tags: ["cables", "menswear", "charcoal"],
+    craftDetails: [
+      {
+        x: 50,
+        y: 20,
+        title: "Cropped, boxy neckline",
+        description: "Sits higher and squarer than a standard crew — no ribbing gap, no stretched-out collar after a year of wear.",
+      },
+      {
+        x: 35,
+        y: 55,
+        title: "Guernsey cable panel",
+        description: "A traditional fisherman cable, worked at a bigger gauge so it reads from across a room instead of up close.",
+      },
+    ],
   },
   {
     id: "p3",
@@ -168,6 +204,9 @@ export interface Testimonial {
   handle: string;
   quote: string;
   project: string;
+  productSlug: string;
+  /** Hotspot position on the photo, 0-100. */
+  hotspot: { x: number; y: number };
   image: string;
   imageAlt: string;
 }
@@ -179,6 +218,8 @@ export const testimonials: Testimonial[] = [
     quote:
       "I told myself I'd never finish a sweater. Six weeks later I was wearing the Harbor out to dinner and someone asked which designer made it.",
     project: "The Harbor Sweater",
+    productSlug: "the-harbor-sweater",
+    hotspot: { x: 52, y: 45 },
     image: "/images/community-1.jpg",
     imageAlt: "Woman wearing an oversized cream knit sweater walking down a city street",
   },
@@ -188,6 +229,8 @@ export const testimonials: Testimonial[] = [
     quote:
       "I'd bought and returned two other 'beginner' kits before this one — always got stuck at the armhole and gave up. The video for the Field Vest actually shows you the ugly part in real time. I finished it on a Tuesday and wore it that Friday.",
     project: "The Field Vest",
+    productSlug: "the-field-vest",
+    hotspot: { x: 50, y: 40 },
     image: "/images/community-2.jpg",
     imageAlt: "Man wearing a textured knit vest sitting at a café table",
   },
@@ -197,6 +240,8 @@ export const testimonials: Testimonial[] = [
     quote:
       "This is the first knitting brand that's ever made me feel like I was buying fashion, not a craft kit. The Sable Scarf sold out before I finished mine.",
     project: "The Sable Scarf",
+    productSlug: "the-sable-scarf",
+    hotspot: { x: 45, y: 32 },
     image: "/images/community-3.jpg",
     imageAlt: "Woman wearing a chunky terracotta scarf wrapped around her neck on the street",
   },

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Reveal, StaggerItem, StaggerReveal } from "@/components/motion/reveal";
-import { testimonials } from "@/lib/data";
+import { ImageHotspots, type Hotspot } from "@/components/hotspot/image-hotspots";
+import { products, testimonials } from "@/lib/data";
 
 export function SocialProof() {
   return (
@@ -23,7 +24,21 @@ export function SocialProof() {
         </Reveal>
 
         <StaggerReveal className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
-          {testimonials.map((t) => (
+          {testimonials.map((t) => {
+            const product = products.find((p) => p.slug === t.productSlug);
+            const hotspots: Hotspot[] | undefined = product
+              ? [
+                  {
+                    id: `${t.productSlug}-tag`,
+                    type: "product",
+                    x: t.hotspot.x,
+                    y: t.hotspot.y,
+                    product,
+                  },
+                ]
+              : undefined;
+
+            return (
             <StaggerItem key={t.name}>
               <figure className="flex flex-col">
                 <div className="relative aspect-[4/5] overflow-hidden bg-oat">
@@ -34,6 +49,7 @@ export function SocialProof() {
                     sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover"
                   />
+                  {hotspots && <ImageHotspots hotspots={hotspots} />}
                 </div>
                 <blockquote className="mt-5 font-serif text-lg leading-snug text-ink">
                   &ldquo;{t.quote}&rdquo;
@@ -46,7 +62,8 @@ export function SocialProof() {
                 </figcaption>
               </figure>
             </StaggerItem>
-          ))}
+            );
+          })}
         </StaggerReveal>
       </div>
     </section>

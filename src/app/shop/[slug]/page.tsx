@@ -6,6 +6,7 @@ import { products } from "@/lib/data";
 import { Container } from "@/components/ui/container";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
 import { ProductCard } from "@/components/product/product-card";
+import { ImageHotspots, type Hotspot } from "@/components/hotspot/image-hotspots";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -36,6 +37,17 @@ export default async function ProductPage({
 
   const related = products.filter((p) => p.id !== product.id).slice(0, 4);
 
+  const craftHotspots: Hotspot[] | undefined = product.craftDetails?.map(
+    (d, i) => ({
+      id: `${product.id}-detail-${i}`,
+      type: "info",
+      x: d.x,
+      y: d.y,
+      title: d.title,
+      description: d.description,
+    })
+  );
+
   return (
     <div className="pb-24">
       <Container className="pt-8">
@@ -48,19 +60,30 @@ export default async function ProductPage({
       </Container>
 
       <Container className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-10">
-        <div className="relative aspect-[4/5] overflow-hidden bg-oat md:col-span-7">
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            fill
-            priority
-            sizes="(min-width: 768px) 55vw, 100vw"
-            className="object-cover"
-          />
-          {product.limited && (
-            <span className="absolute left-4 top-4 bg-clay px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-paper">
-              Limited
-            </span>
+        <div className="md:col-span-7">
+          <div className="relative aspect-[4/5] overflow-hidden bg-oat">
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              fill
+              priority
+              sizes="(min-width: 768px) 55vw, 100vw"
+              className="object-cover"
+            />
+            {product.limited && (
+              <span className="absolute left-4 top-4 bg-clay px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-paper">
+                Limited
+              </span>
+            )}
+            {craftHotspots && craftHotspots.length > 0 && (
+              <ImageHotspots hotspots={craftHotspots} />
+            )}
+          </div>
+          {craftHotspots && craftHotspots.length > 0 && (
+            <p className="mt-3 text-xs text-stone">
+              Tap the <span className="text-clay">+</span> marks on the photo
+              for construction notes.
+            </p>
           )}
         </div>
 
