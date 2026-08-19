@@ -14,7 +14,7 @@ const specs = [
 
 export function PatternSpotlight() {
   return (
-    <section className="relative bg-oat pb-28 pt-16 md:pb-40 md:pt-20">
+    <section className="relative bg-oat pb-20 pt-16 md:pb-28 md:pt-20">
       <div className="relative h-[62vh] min-h-[420px] w-full overflow-hidden">
         <Image
           src={pattern.image}
@@ -28,7 +28,7 @@ export function PatternSpotlight() {
           <p className="text-[11px] uppercase tracking-[0.25em] text-clay-light">
             The Pattern Is The Product
           </p>
-          <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-[1.1] text-paper sm:text-5xl">
+          <h2 className="mt-4 max-w-2xl font-serif text-3xl leading-[1.15] text-paper sm:text-5xl">
             Yes, it&apos;s a PDF. It&apos;s also the fastest route from
             &ldquo;I wish I could wear that&rdquo; to wearing it.
           </h2>
@@ -37,7 +37,7 @@ export function PatternSpotlight() {
 
       <Reveal
         delay={0.15}
-        className="relative z-10 mx-4 -mt-16 max-w-md bg-paper p-7 shadow-xl sm:mx-10 md:mr-10 md:-mt-24 md:ml-auto md:w-[440px] md:p-9"
+        className="relative z-10 mx-5 mt-8 max-w-md bg-paper p-7 shadow-xl sm:mx-10 md:ml-auto md:mr-10 md:mt-10 md:w-[440px] md:p-9"
       >
         <p className="text-[15px] leading-relaxed text-ink-soft">
           $28 buys a fully graded, professionally tech-edited pattern with a
