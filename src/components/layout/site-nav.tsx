@@ -43,7 +43,17 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   return (
+    <>
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
@@ -118,64 +128,77 @@ export function SiteNav() {
         </div>
       </Container>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 bg-paper md:hidden"
-          >
-            <Container>
-              <div className="flex h-[72px] items-center justify-between">
-                <span className="font-serif text-[22px] font-medium">PURL</span>
-                <button
-                  className="-mr-2 p-2"
-                  onClick={() => setMobileOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <X size={22} />
-                </button>
-              </div>
-              <motion.nav
-                className="mt-10 flex flex-col gap-7"
-                initial="hidden"
-                animate="show"
-                variants={{
-                  hidden: {},
-                  show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-                }}
-              >
-                {[...links, { href: "/quiz", label: "Take the Quiz" }].map(
-                  (l, i) => (
-                    <motion.div
-                      key={l.label}
-                      variants={{
-                        hidden: { opacity: 0, x: -16 },
-                        show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
-                      }}
-                    >
-                      <Link
-                        href={l.href}
-                        onClick={() => setMobileOpen(false)}
-                        className={cn(
-                          "font-serif text-4xl",
-                          i === links.length && "text-clay"
-                        )}
-                      >
-                        {l.label}
-                      </Link>
-                    </motion.div>
-                  )
-                )}
-              </motion.nav>
-            </Container>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
+
+    {/*
+      Rendered as a sibling of <header>, not nested inside it. The header
+      is `position: sticky`, and a `position: fixed` descendant of a
+      sticky ancestor is a known trouble spot on mobile Safari — the
+      sticky element can end up acting as the fixed child's containing
+      block instead of the viewport, so `inset-0` resolves against the
+      ~72px header box rather than the full screen. That leaves the
+      overlay's opaque background covering only a sliver while its nav
+      links (laid out past that box) render on top of the real page
+      content behind them. Keeping this fixed panel outside the sticky
+      stacking context entirely avoids the ambiguity.
+    */}
+    <AnimatePresence>
+      {mobileOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 bg-paper md:hidden"
+        >
+          <Container>
+            <div className="flex h-[72px] items-center justify-between">
+              <span className="font-serif text-[22px] font-medium">PURL</span>
+              <button
+                className="-mr-2 p-2"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={22} />
+              </button>
+            </div>
+            <motion.nav
+              className="mt-10 flex flex-col gap-7"
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: {},
+                show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+              }}
+            >
+              {[...links, { href: "/quiz", label: "Take the Quiz" }].map(
+                (l, i) => (
+                  <motion.div
+                    key={l.label}
+                    variants={{
+                      hidden: { opacity: 0, x: -16 },
+                      show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+                    }}
+                  >
+                    <Link
+                      href={l.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(
+                        "font-serif text-4xl",
+                        i === links.length && "text-clay"
+                      )}
+                    >
+                      {l.label}
+                    </Link>
+                  </motion.div>
+                )
+              )}
+            </motion.nav>
+          </Container>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
